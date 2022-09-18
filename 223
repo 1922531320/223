@@ -1,0 +1,325 @@
+//判断顺序表是否为空。空为1，否则返0
+int IsEmpty(Splist *L)
+{
+	if(l->len==0)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+ } 
+ //遍历并输出顺序表
+ void printList(Sqlist *L)
+ {
+ 	int i;
+	 for(i=0;i->len;i++)
+	 {
+	 	printf("%d",L->data[i]);
+	  } 
+	  printf("\n");
+  } 
+ 
+ //删除
+ int listDelete(Sqlist *L,int i)
+ {
+ 	if(L->len==0)
+ 	{
+ 		return 0;
+	 }
+	 if(i<1||i>L->len)
+	 {
+	 	return 0; 
+	 }//判断删除的条件 
+	 int j;
+	 for(j=i;j<len;j++)
+	 {
+	 	L->data[j-1]=L->data[j]
+	 }
+	 L->len--;
+	 return 1;
+ }
+  //查找 
+int listDelete(Sqlist *L,data x)
+{
+	int i;
+	for(i=0;i<=len;i++)
+	{
+		if(l->data[i]==x)
+		{
+			return i;
+		}
+	}
+	return 0;
+}
+ //插入 
+ int lnsertDelete(Sqlist *L,int i)
+ {
+ 	if(L->len==0)
+ 	{
+ 		return 0;
+	 }
+	 if(i<1||i>L->len)
+	 {
+	 	return 0; 
+	 }//判断插入的条件 
+	 int j;
+	 for(j=i;j<len;j--)
+	 {
+	 	L->data[j+1]=L->data[j]
+	 }
+	 L->len++;
+	 return 1;
+ }
+ //---------排序--------(冒泡)----- 
+  void BubbleSort1(int List[])
+ {
+ 	int i,j,temp;
+	 for(i=1;i<MAX-1;i++)
+	 {
+	 	for(j=MAX-1;j>=i;j--)
+	 	{
+	 		if(List[j]<MAX-1)
+	 		{
+	 			temp=List[j];
+	 			List[j]=List[j-1];
+	 			List[j-1]=temp;
+			 }
+		 }
+	  } 
+ }
+//链表 
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef int ElemType;
+
+typedef struct Node
+{
+	ElemType data;
+	struct Node *next;
+}LinkNode, *LinkPtr;
+
+LinkPtr Link_Init();
+int Link_TailInsert(LinkPtr H, int n);
+void Link_Print(LinkPtr H);
+int Link_Value(LinkPtr H, ElemType e);
+int Link_Loate(LinkPtr H, int i, ElemType *e);
+int Link_Insert(LinkPtr H, int i, ElemType e);
+
+int main()
+{
+	LinkPtr H;
+	ElemType x;
+	H = Link_Init();
+	int n, i;
+	printf("请输入数据元素的个数：");
+	scanf("%d", &n);
+	i = Link_TailInsert(H, n);
+	Link_Print(H);
+	i = Link_Value(H, 40);
+	if(i == 0)
+	{
+		printf("找不到\n");
+	}
+	else
+	{
+		printf("%d\n", i);
+	} 
+	i = Link_Loate(H, 2, &x);
+	if(i == 0)
+	{
+		printf("找不到\n");
+	}
+	else
+	{
+		printf("%d\n", x);
+	}
+	Link_Insert(H, 4, 7); 
+	Link_Print(H);
+	return 0;
+}
+
+LinkPtr Link_Init()
+{
+	LinkPtr L;
+	L = (LinkPtr)malloc(sizeof(LinkNode));
+	if(L == NULL)
+	{
+		return NULL;
+	}
+	L->next = NULL;
+	return L;
+}
+
+int Link_TailInsert(LinkPtr H, int n)
+{
+	ElemType e;
+	int i = 1;
+	LinkPtr old = H, P = NULL;
+	while(i <= n)
+	{
+		printf("请输入第%d个数据元素：", i);
+		scanf("%d", &e);
+		P = (LinkPtr)malloc(sizeof(LinkNode));
+		if(P == NULL)
+		{
+			return 0;
+		}
+		P->data = e;
+		P->next = NULL;
+		old->next = P; 
+		old = P;
+		i++;
+	}
+	return 1;
+}
+//遍历 
+void Link_Print(LinkPtr H)
+{
+	LinkPtr cur = H->next;
+	while(cur != NULL)
+	{
+		printf("%d ", cur->data);
+		cur = cur->next;
+	}
+	printf("\n");
+}
+
+//-------------------按值查找-------------------
+int Link_Value(LinkPtr H, ElemType e)
+{
+	int pos = 0;
+	LinkPtr cur = H;
+	while(cur->next != NULL)
+	{
+		cur = cur->next;
+		pos++;
+		if(cur->data == e)
+		{
+			return pos;
+		}
+	}
+	return 0;
+} 
+//---------------按位置查找, 查找成功返回1， 查找失败返回0----------------------
+int Link_Loate(LinkPtr H, int i, ElemType *e)
+{
+	int pos = 1;
+	LinkPtr cur = H->next;
+	while(cur != NULL && pos < i)
+	{
+		cur = cur->next;
+		pos++;
+	}
+	if(cur == NULL || pos != i)
+	{
+		return 0;
+	}
+	*e = cur->data;
+	return 1;
+} 
+//-------------------------插入--------------------------------
+int Link_Insert(LinkPtr H, int i, ElemType e)
+{
+	LinkPtr p = NULL, q = H;
+	int pos = 0; 
+	//查找插入位置的前一个结点
+	while(q != NULL && pos < i - 1)
+	{
+		q = q->next;
+		pos++;
+	} 
+	if(q == NULL || pos != i - 1)
+	{
+		return 0;
+	}
+	p = (LinkPtr)malloc(sizeof(LinkNode));
+	p->data = e;
+	p->next = NULL;
+	p->next = q->next;
+	q->next = p;
+	return 1;
+}
+//------------------------------删除算法-----------------------------------
+int Link_Delete(LinkPtr H, int i, ElemType *e)
+{
+	int pos = 0;
+	LinkPtr p = H, q = NULL;
+	while(p != NULL && pos < i - 1)
+	{
+		p = p->next;
+		pos++;
+	}
+	if(p == NULL || pos != i - 1)
+	{
+		return 0;
+	}
+	q = p->next;
+	*e = q->data;
+	p->next = q->next;
+	free(q);
+	q = NULL;
+	return 1;
+}
+
+//--------------------------头插法创建单链表-------------------------
+int Link_HeadInsert(LinkPtr H, int n)
+{
+	LinkPtr p = NULL;
+	int i = 1;
+	ElemType e;
+	while(i <= n)
+	{
+		printf("请输入第%d个数据：", i);
+		scanf("%d", &e);
+		p = (LinkPtr)malloc(sizeof(LinkNode));
+		p->data = e;
+		p->next = H->next;
+		H->next = p;
+		i++;
+	}
+	return 1;
+}
+/*已知头指针分别为la 和lb 的带头结点的单链表中，结点按元素值非递减有序排列。
+写出将la 和 lb 两链表归并成一个结点按元素值非递减有序排列的单链表（其头指针为 lc）*/
+
+typedef struct Node
+{
+	ElemType data;
+	struct Node *next;
+}LinkNode, *LinkPtr;
+
+LinkPtr Union(LinkPtr La, LinkPtr Lb)
+{
+	LinkPtr Pa = La->next, Pb = Lb->next, Lc, Pc;
+	Lc = (LinkPtr)malloc(sizeof(LinkNode));
+	Pc = Lc;
+	while(Pa!=NULL && Pb!=NULL)
+	{
+		if(Pa->data <= Pb->data)
+		{
+			Pc->next = Pa;
+			Pc = Pa;
+			Pa = Pa->next;
+		}
+		else
+		{
+			Pc->next = Pb;
+			Pc = Pb;
+			Pb = Pb->next;
+		}
+	}
+	if(Pa!=NULL)
+	{
+		Pc->next = Pa;
+	}
+	if(Pb!=NULL)
+	{
+		Pc->next = Pb;
+	}
+	free(La);
+	free(Lb);
+	return Lc;
+}
